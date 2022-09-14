@@ -1,10 +1,6 @@
 import { Injectable, Optional } from '@angular/core';
 import { LoggerConfig } from './models';
-export interface ESquareErrorMsg {
-  msg: string;
-  stackTrace: unknown;
-  timeStamp: Date;
-}
+
 
 @Injectable({
   providedIn: 'root'
