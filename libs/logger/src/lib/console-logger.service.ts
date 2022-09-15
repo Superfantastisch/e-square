@@ -18,7 +18,6 @@ export class ConsoleLoggerService extends BaseLoggingServiceService {
   }
 
   flushErr = (esErr: ESError[]): void => {
-    console.log('ConsoleLoggerService flushing errors');
     esErr.forEach(err => {
       this._loggingError(err);
     });
@@ -31,7 +30,6 @@ export class ConsoleLoggerService extends BaseLoggingServiceService {
   };
 
   private _loggingError(err: ESError): void {
-    console.log('ConsoleLoggerService logs:');
     console.log(err);
   }
 }

@@ -22,32 +22,8 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
       }),
       catchError((err: HttpErrorResponse) => {
         this.loggerService.logError(err);
-        return throwError(EMPTY);
+        return throwError(err);
       })
-      // catchError((error: HttpErrorResponse) => {
-      //   console.log('The intercepted error');
-      //   console.log(error);
-      //   // if (error.error instanceof ErrorEvent) {
-      //   //   console.log('This is client side error');
-      //   //   if (this._myConfig.production) {
-      //   //     this.logger.writeError({
-      //   //       msg: error.error.message,
-      //   //       stackTrace: error.error,
-      //   //       timeStamp: new Date()
-      //   //     })
-      //   //   }
-
-      //   // } else {
-      //   //   if (this._myConfig.production) {
-      //   //     this.logger.writeError({
-      //   //       msg: error.error.message,
-      //   //       stackTrace: error.error,
-      //   //       timeStamp: new Date()
-      //   //     })
-      //   //   }
-      //   // }
-      //   return throwError(error);
-      // })
     );
   }
 }

@@ -21,16 +21,10 @@ export class LoggerService {
       production: false,
       interval: 5000
     };
-    console.log('Config:');
-    console.log(this._config);
   }
 
   logError(err: Error) {
     if (this._config.production && err) {
-      // console.log('error');
-      // console.log(err);
-      // console.log('base logging service');
-      // console.log(this._loggers);
       this._loggers.forEach(logger => {
         logger.addErr(this._createESError(err));
       })

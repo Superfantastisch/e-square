@@ -14,6 +14,11 @@ import { BaseLoggingServiceService } from './base-logging-service.service';
 import { ConsoleLoggerService } from './console-logger.service';
 import { LocalStorageLoggerService } from './local-storage-logger.service';
 
+export const LoggerMap = new Map<Targets, any>([
+  ['Console', ConsoleLoggerService],
+  ['LocalStorage', LocalStorageLoggerService]
+]);
+
 @NgModule({
   imports: [CommonModule, RouterModule],
   providers: [],
@@ -29,35 +34,22 @@ export class LoggerModule {
   }
   static forRoot(config: LoggerConfig): ModuleWithProviders<LoggerModule> {
     const myProvider: Provider[] = [];
-    console.log('forRoot config settings');
-    console.log(config);
-    if (config?.targets) {
+    if (config?.targets && config.targets.length > 0) {
       config.targets.forEach((target) => {
-        switch (target) {
-          case 'Console':
-            console.log('target is Console');
-            myProvider.push({
-              provide: BaseLoggingServiceService,
-              useClass: ConsoleLoggerService,
-              multi: true,
-            });
-            break;
-          case 'LocalStorage':
-            console.log('target is Local Storage');
-            myProvider.push({
-              provide: BaseLoggingServiceService,
-              useClass: LocalStorageLoggerService,
-              multi: true,
-            });
-            break;
-
-          default:
-            break;
-        }
+        myProvider.push({
+          provide: BaseLoggingServiceService,
+          useClass: LoggerMap.get(target),
+          multi: true
+        });
+      });
+    } else {
+      myProvider.push({
+        provide: BaseLoggingServiceService,
+        useClass: ConsoleLoggerService,
+        multi: true,
       });
     }
-    console.log('providers');
-    console.log(myProvider);
+
     return {
       ngModule: LoggerModule,
       providers: [

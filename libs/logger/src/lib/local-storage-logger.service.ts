@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { bufferTime, Subject } from 'rxjs';
 import { BaseLoggingServiceService } from './base-logging-service.service';
 import { ESError } from './models/es-error.i';
+import { v4 as uuid } from 'uuid';
 
 @Injectable()
 export class LocalStorageLoggerService extends BaseLoggingServiceService {
   errQueue$ = new Subject<ESError>();
 
   constructor() {
-    console.log('Constructiong LocalStorageLoggerService');
     super();
     this.errQueue$.pipe(bufferTime(this.interval)).subscribe(errArray => {
       if (errArray && errArray.length > 0) {
@@ -18,8 +18,6 @@ export class LocalStorageLoggerService extends BaseLoggingServiceService {
   }
 
   flushErr = (esErr: ESError[]): void => {
-    console.log('LocalStorageLoggerService flushing errors');
-    console.log(esErr);
     esErr.forEach(err => {
       this._loggingError(err);
     });
@@ -32,7 +30,6 @@ export class LocalStorageLoggerService extends BaseLoggingServiceService {
   };
 
   private _loggingError(err: ESError): void {
-    console.log('LocalStorageLoggerService logs:');
-    localStorage.setItem('asdf', JSON.stringify(err));
+    localStorage.setItem(uuid(), JSON.stringify(err));
   }
 }

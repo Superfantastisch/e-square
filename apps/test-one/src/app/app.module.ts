@@ -2,7 +2,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { LoggerModule } from '@e-square/logger';
-import { interval } from 'rxjs';
 import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
