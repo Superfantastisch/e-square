@@ -1,7 +1,8 @@
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { LoggerModule } from '@e-square/logger';
+import { interval } from 'rxjs';
 import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
@@ -15,7 +16,8 @@ import { NxWelcomeComponent } from './nx-welcome.component';
     LoggerModule.forRoot({
       format: 'Default',
       targets: ['Console', 'LocalStorage'],
-      production: !environment.production // using development for testing
+      production: !environment.production, // using development for testing,
+      interval: 6000
     })
   ],
   bootstrap: [AppComponent],
